@@ -144,34 +144,8 @@
 </script>
 <script src="https://www.highperformanceformat.com/ddb8e0f70c40d24b0bfa62729a026513/invoke.js"></script>
     
-        function renderOfflineCards() {
-            const grid = document.getElementById("cardsGrid");
-            const query = document.getElementById("offlineSearch").value.toLowerCase();
-            grid.innerHTML = "";
 
-            const filtered = payments.filter(p => {
-                const matchQuery = p.schemeName.toLowerCase().includes(query) || p.schemeNameUr.includes(query) || p.province.toLowerCase().includes(query);
-                const matchProv = activeProvince === "All" || p.province === activeProvince;
-                return matchQuery && matchProv;
-            });
-
-            if(filtered.length === 0) {
-                grid.innerHTML = '<div class="col-span-full bg-white rounded-2xl p-8 border text-center text-gray-500 font-medium font-urdu">سرچ کے مطابق معلومات نہیں ملیں۔</div>';
-                return;
-            }
-
-            filtered.forEach(p => {
-                const card = document.createElement("div");
-                card.className = "bg-white border rounded-2xl p-5 shadow-sm transition flex flex-col justify-between space-y-3";
                 
-                // Province color header
-                let provColor = "text-emerald-700 bg-emerald-50 border-emerald-100";
-                if (p.province === "Punjab") provColor = "text-orange-700 bg-orange-50 border-orange-200";
-                if (p.province === "Sindh") provColor = "text-blue-700 bg-blue-50 border-blue-200";
-                if (p.province === "KPK") provColor = "text-green-700 bg-green-50 border-green-200";
-                if (p.province === "Balochistan") provColor = "text-amber-800 bg-amber-50 border-amber-200";
-
-                card.innerHTML = `
                     <div class="flex items-center justify-between">
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold border capitalize ${provColor}">
                             📍 ${p.province}
