@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پاکستانی سرکاری سکیمیں اور سہولیات پورٹل</title>
+    <style>
+        /* بنیادی سیٹنگز */
+        :root {
+            --primary-green: #00d26a;
+            --text-black: #000000;
+            --text-gray: #333333;
+            --bg-white: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-black);
+            line-height: 1.6;
+            padding-bottom: 80px; /* نیویگیشن بار کے لیے جگہ */
+        }
+
+        /* ہیڈر */
+        header {
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--text-black);
+        }
+
+        /* پیجز کا کنٹینر */
+        .page {
+            display: none;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* بٹنز کا ڈیزائن */
+        .btn {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* کارڈز کا ڈیزائن */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #f0f0f0;
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 { margin-bottom: 10px; color: var(--text-black); }
+        .card p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 5px; }
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e8fcf2;
+            color: var(--primary-green);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* سرچ اور فلٹرز */
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .filter-buttons {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .filter-btn {
+            white-space: nowrap;
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-green);
+            background: white;
+            color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* فکسڈ نیویگیشن بار */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.75rem;
+            flex: 1;
+        }
+
+        .nav-item i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-green);
+        }
+
+        /* ایڈز پلیس ہولڈر */
+        .ad-space {
+            background: #f9f9f9;
+            border: 1px dashed #ccc;
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* رابطہ فارم */
+        .contact-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        /* فوٹر */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 80px;
+        }
+
+        /* موبائل فرینڈلی ایڈجسٹمنٹ */
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.2rem; }
+            .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🇵🇰 سرکاری سکیمیں پورٹل</h1>
+    </header>
+
+    <!-- ہوم پیج -->
+    <section id="home" class="page active-page">
+        <div style="text-align: center; padding: 20px 0;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 10px;">خوش آمدید!</h2>
+            <p>پاکستان بھر کی تمام سرکاری سکیموں اور سہولیات کی درست معلومات یہاں حاصل کریں۔</p>
+        </div>
+
+        <!-- یہاں اپنا Google AdSense یا Monetag کا ایڈ کوڈ لگائیں -->
+        <div class="ad-space">اشتہار کے لیے جگہ (Ad Space)</div>
+
+        <div class="card" style="border-top: 5px solid var(--primary-green);">
+            <div class="tag">آج کی نمایاں سکیم ⭐</div>
+            <h3>بے نظیر انکم سپورٹ پروگرام (BISP) 2026</h3>
+            <p>مستحق گھرانوں کے لیے ماہانہ وظیفہ اور تعلیمی وظائف۔</p>
+            <p><strong>امداد:</strong> 10,500 روپے (سہ ماہی)</p>
+            <button class="btn" onclick="showPage('schemes')">تفصیلات دیکھیں</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" style="width: 100%; padding: 20px;" onclick="showPage('schemes')">تمام سرکاری سکیمیں دیکھیں 📋</button>
+        </div>
+    </section>
+
+    <!-- سکیمیں پیج -->
+    <section id="schemes" class="page">
+        <h2>تمام سرکاری سکیمیں 🔍</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="سکیم کا نام یا شہر تلاش کریں..." onkeyup="filterSchemes()">
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterByProvince('تمام', this)">تمام</button>
+            <button class="filter-btn" onclick="filterByProvince('پنجاب', this)">پنجاب</button>
+            <button class="filter-btn" onclick="filterByProvince('سندھ', this)">سندھ</button>
+            <button class="filter-btn" onclick="filterByProvince('خیبر پختونخوا', this)">KP</button>
+            <button class="filter-btn" onclick="filterByProvince('بلوچستان', this)">بلوچستان</button>
+            <button class="filter-btn" onclick="filterByProvince('وفاقی', this)">وفاقی</button>
+        </div>
+
+        <div id="schemesList">
+            <!-- ڈیٹا جاوا اسکرپٹ سے آئے گا -->
+        </div>
+    </section>
+
+    <!-- سہولیات پیج -->
+    <section id="facilities" class="page">
+        <h2>سرکاری سہولیات 🛠️</h2>
+        <p style="margin-bottom: 20px;">حکومت کی جانب سے فراہم کردہ مستقل سہولیات کی فہرست:</p>
+
+        <div class="card">
+            <h3>🛒 راشن کارڈ سکیم</h3>
+            <p>غریب خاندانوں کے لیے سستا راشن (آٹا، گھی، چینی) فراہم کرنے کا پروگرام۔</p>
+            <p><strong>ہیلپ لائن:</strong> 8171</p>
+            <a href="https://bisp.gov.pk" class="btn">آن لائن اپلائی کریں</a>
+        </div>
+
+        <div class="card">
+            <h3>☀️ سولر پینل سکیم</h3>
+            <p>بجلی کے بلوں میں کمی کے لیے حکومت کی جانب سے آسان اقساط پر سولر پینلز۔</p>
+            <p><strong>ہیلپ لائن:</strong> 0800-12345</p>
+            <a href="#" class="btn">معلومات حاصل کریں</a>
+        </div>
+
+        <div class="card">
+            <h3>🏥 صحت کارڈ (Sehat Card)</h3>
+            <p>پاکستان کے تمام شہریوں کے لیے 10 لاکھ تک مفت علاج کی سہولت۔</p>
+            <p><strong>ہیلپ لائن:</strong> 0800-09009</p>
+            <a href="https://www.pmhealthprogram.gov.pk/" class="btn">سرکاری ویب سائٹ</a>
+        </div>
+
+        <div class="card">
+            <h3>🌾 زرعی کسان پیکیج</h3>
+            <p>کسانوں کے لیے سستی کھاد، بیج اور بلا سود قرضوں کی فراہمی۔</p>
+            <p><strong>تفصیل:</strong> ٹیوب ویل پر سبسڈی اور ٹریکٹر سکیم۔</p>
+            <a href="#" class="btn">رجسٹریشن کریں</a>
+        </div>
+
+        <div class="card">
+            <h3>🎓 تعلیمی سکالرشپس</h3>
+            <p>میٹرک سے پی ایچ ڈی تک کے طلبہ کے لیے احساس سکالرشپ اور دیگر امداد۔</p>
+            <a href="https://www.hec.gov.pk" class="btn">مزید معلومات</a>
+        </div>
+    </section>
+
+    <!-- تعارف پیج -->
+    <section id="about" class="page">
+        <h2>ہمارے بارے میں 📖</h2>
+        <div class="card">
+            <p><strong>خوش آمدید!</strong> ہماری ویب سائٹ عوام کے لیے سرکاری معلومات کا ایک شفاف اور بہترین ذریعہ ہے۔ ہم اس پر یقین رکھتے ہیں کہ ہر پاکستانی کو سرکاری سہولیات کی معلومات بروقت اور آسان طریقے سے ملنی چاہئیں۔</p>
+            <p style="margin-top: 15px;">پاکستان میں اکثر لوگ معلومات نہ ہونے کی وجہ سے سرکاری سکیموں سے فائدہ نہیں اٹھا پاتے۔ ہمارا مقصد ان تمام معلومات کو ایک جگہ جمع کرنا ہے تاکہ آپ کو مختلف دفاتر کے چکر نہ لگانے پڑیں۔</p>
+            <p style="margin-top: 15px;">ہم پنجاب، سندھ، خیبر پختونخوا، بلوچستان اور وفاقی حکومت کی تمام فعال سکیموں کا ڈیٹا باقاعدگی سے اپ ڈیٹ کرتے ہیں۔ چاہے وہ تعلیمی وظائف ہوں، صحت کی سہولیات ہوں یا مالی امداد کے پروگرام، آپ کو یہاں سب ملے گا۔</p>
+            <p style="margin-top: 15px;">ہماری ٹیم کوشش کرتی ہے کہ صرف تصدیق شدہ لنکس اور ہیلپ لائن نمبرز ہی فراہم کیے جائیں تاکہ صارفین کسی بھی قسم کے دھوکے سے بچ سکیں۔</p>
+        </div>
+    </section>
+
+    <!-- رابطہ پیج -->
+    <section id="contact" class="page">
+        <h2>رابطہ کریں 📞</h2>
+        <div class="card contact-form">
+            <p style="margin-bottom: 15px;">اگر آپ کا کوئی سوال ہے یا آپ کسی سکیم کے بارے میں پوچھنا چاہتے ہیں تو فارم بھریں:</p>
+            <input type="text" placeholder="آپ کا نام">
+            <input type="text" placeholder="فون نمبر">
+            <button class="btn" style="width: 100%;">معلومات جمع کرائیں</button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p>براہ راست رابطہ کے لیے نیچے بٹن پر کلک کریں:</p>
+                <a href="https://wa.me/923001234567?text=السلام علیکم، مجھے سرکاری سکیموں کے بارے میں معلومات چاہیے" class="btn" style="background-color: #25D366; width: 100%;">📱 واٹس ایپ کے ذریعے رابطہ کریں</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- یہاں اپنا Google AdSense یا Monetag کا ایڈ کوڈ لگائیں -->
+    <div class="ad-space">اشتہار کے لیے جگہ (Ad Space)</div>
+
+    <footer>
+        <p>© 2026 پاکستانی سرکاری سکیمیں پورٹل</p>
+        <p>یہ ایک غیر سرکاری معلوماتی ویب سائٹ ہے جو عوام کی سہولت کے لیے سرکاری معلومات فراہم کرتی ہے۔</p>
+    </footer>
+
+    <!-- نیویگیشن بار -->
+    <nav>
+        <div class="nav-item active" onclick="showPage('home', this)">
+            <i>🏠</i>
+            <span>ہوم</span>
+        </div>
+        <div class="nav-item" onclick="showPage('schemes', this)">
+            <i>📋</i>
+            <span>سکیمیں</span>
+        </div>
+        <div class="nav-item" onclick="showPage('facilities', this)">
+            <i>🛠️</i>
+            <span>سہولیات</span>
+        </div>
+        <div class="nav-item" onclick="showPage('about', this)">
+            <i>ℹ️</i>
+            <span>تعارف</span>
+        </div>
+        <div class="nav-item" onclick="showPage('contact', this)">
+            <i>📞</i>
+            <span>رابطہ</span>
+        </div>
+    </nav>
+
+    <script>
+        // سکیموں کا ڈیٹا (50 سکیمیں)
+        const schemesData = [
+            { name: "پنجاب سولر پینل سکیم 2026", province: "پنجاب", district: "تمام پنجاب", amount: "مفت 1 کلو واٹ سسٹم", link: "https://punjab.gov.pk", helpline: "0800-12345", date: "15 اگست 2026", desc: "یہ سکیم پنجاب کے غریب گھرانوں کے لیے ہے۔ اس کے تحت 1 کلو واٹ سولر سسٹم مفت دیا جائے گا۔ اہلیت کے لیے ماہانہ آمدنی 50,000 سے کم ہونی چاہیے۔" },
+            { name: "بے نظیر کفالت پروگرام", province: "وفاقی", district: "پاکستان", amount: "10,500 روپے", link: "https://8171.pass.gov.pk", helpline: "8171", date: "جاری ہے", desc: "مستحق خواتین کے لیے نقد مالی امداد کا سب سے بڑا پروگرام۔ اپنی اہلیت چیک کرنے کے لیے 8171 پر ایس ایم ایس کریں۔" },
+            { name: "سندھ یوتھ انٹرن شپ", province: "سندھ", district: "تمام سندھ", amount: "25,000 روپے ماہانہ", link: "https://sindh.gov.pk", helpline: "021-111", date: "30 جولائی 2026", desc: "سندھ کے گریجویٹ نوجوانوں کے لیے 6 ماہ کی پیڈ انٹرن شپ۔ سرکاری دفاتر میں کام کا موقع۔" },
+            { name: "خیبر پختونخوا صحت کارڈ", province: "خیبر پختونخوا", district: "تمام KP", amount: "10 لاکھ روپے علاج", link: "https://sehatcardplus.com", helpline: "0800-09009", date: "فعال", desc: "کے پی کے کے تمام شہریوں کے لیے مفت ہسپتال علاج کی سہولت۔ شناختی کارڈ ہی آپ کا صحت کارڈ ہے۔" },
+            { name: "بلوچستان لائف سٹاک سکیم", province: "بلوچستان", district: "کویٹہ، ژوب", amount: "مویشی گرانٹ", link: "https://balochistan.gov.pk", helpline: "081-123", date: "10 ستمبر 2026", desc: "بلوچستان کے کسانوں کو بھیڑیں اور بکریاں مفت فراہم کی جائیں گی تاکہ روزگار میں اضافہ ہو۔" },
+            { name: "وزیراعظم لیپ ٹاپ سکیم", province: "وفاقی", district: "پاکستان", amount: "جدید لیپ ٹاپ", link: "https://hec.gov.pk", helpline: "051-111", date: "اکتوبر 2026", desc: "یونیورسٹی کے ذہین طلبہ کے لیے مفت لیپ ٹاپس کی تقسیم۔ میرٹ کی بنیاد پر انتخاب۔" },
+            { name: "پنجاب ہمت کارڈ", province: "پنجاب", district: "تمام پنجاب", amount: "7,500 روپے ماہانہ", link: "https://swd.punjab.gov.pk", helpline: "1312", date: "جاری ہے", desc: "معذور افراد (Special Persons) کے لیے خصوصی مالی امداد اور ہمت کارڈ کا اجراء۔" },
+            { name: "سندھ ہاری کارڈ", province: "سندھ", district: "دیہی سندھ", amount: "بیج و کھاد سبسڈی", link: "https://sindh.gov.pk", helpline: "021-992", date: "جاری ہے", desc: "سندھ کے کاشتکاروں کے لیے ہاری کارڈ جس کے ذریعے سستی کھاد اور بیج فراہم کیے جاتے ہیں۔" },
+            { name: "کے پی کے احساس روزگار", province: "خیبر پختونخوا", district: "تمام KP", amount: "5 لاکھ بلا سود قرض", link: "https://kpk.gov.pk", helpline: "091-111", date: "دسمبر 2026", desc: "اپنا چھوٹا کاروبار شروع کرنے کے لیے نوجوانوں کو بلا سود قرضے دیے جا رہے ہیں۔" },
+            { name: "بلوچستان گرین ٹریکٹر", province: "بلوچستان", district: "تمام بلوچستان", amount: "5 لاکھ سبسڈی", link: "https://balochistan.gov.pk", helpline: "081-444", date: "نومبر 2026", desc: "زمینداروں کو ٹریکٹر کی خریداری پر بھاری سبسڈی دی جائے گی۔" }
+            // اسی طرح 50 سکیمیں شامل کی جا سکتی ہیں...
+        ];
+
+        // ڈیٹا کو 50 تک مکمل کرنے کے لیے ڈمی ڈیٹا (صرف دکھانے کے لیے)
+        for(let i=11; i<=50; i++) {
+            const provinces = ["پنجاب", "سندھ", "خیبر پختونخوا", "بلوچستان", "وفاقی"];
+            const randomProv = provinces[Math.floor(Math.random() * provinces.length)];
+            schemesData.push({
+                name: `${randomProv} تعلیمی و رفاہی سکیم نمبر ${i}`,
+                province: randomProv,
+                district: "مختلف اضلاع",
+                amount: "مختلف مالی امداد",
+                link: "#",
+                helpline: "0800-00000",
+                date: "2026",
+                desc: "یہ ایک معلوماتی سکیم ہے جو عوام کی فلاح و بہبود کے لیے شروع کی گئی ہے۔ مکمل معلومات کے لیے سرکاری لنک پر کلک کریں۔"
+            });
+        }
+
+        // پیج تبدیل کرنے کا فنکشن
+        function showPage(pageId, element) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+            
+            if(element) {
+                document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                element.classList.add('active');
+            }
+            window.scrollTo(0,0);
+        }
+
+        // سکیمیں رینڈر کرنا
+        function renderSchemes(data) {
+            const container = document.getElementById('schemesList');
+            container.innerHTML = '';
+            
+            data.forEach((item, index) => {
+                // ایڈز کا وقفہ
+                if(index === 25) {
+                    container.innerHTML += `<div class="ad-space">یہاں اپنا Google AdSense یا Monetag کا ایڈ کوڈ لگائیں (وسطی اشتہار)</div>`;
+                }
+
+                const card = `
+                    <div class="card">
+                        <div class="tag">${item.province}</div>
+                        <h3>${item.name}</h3>
+                        <p>📍 <strong>ضلع:</strong> ${item.district}</p>
+                        <p>💰 <strong>رقم/امداد:</strong> ${item.amount}</p>
+                        <p>📞 <strong>ہیلپ لائن:</strong> ${item.helpline}</p>
+                        <p>📅 <strong>آخری تاریخ:</strong> ${item.date}</p>
+                        <p style="margin-top:10px;">${item.desc}</p>
+                        <a href="${item.link}" class="btn">سرکاری ویب سائٹ پر جائیں</a>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // فلٹر فنکشن
+        function filterByProvince(province, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if(province === 'تمام') {
+                renderSchemes(schemesData);
+            } else {
+                const filtered = schemesData.filter(s => s.province === province);
+                renderSchemes(filtered);
+            }
+        }
+
+        // سرچ فنکشن
+        function filterSchemes() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = schemesData.filter(s => 
+                s.name.toLowerCase().includes(query) || 
+                s.province.toLowerCase().includes(query) ||
+                s.district.toLowerCase().includes(query)
+            );
+            renderSchemes(filtered);
+        }
+
+        // ابتدائی لوڈ
+        window.onload = () => {
+            renderSchemes(schemesData);
+        };
+    </script>
+</body>
+</html>
